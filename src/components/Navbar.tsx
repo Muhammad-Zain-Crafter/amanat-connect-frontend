@@ -83,6 +83,13 @@ const Navbar = () => {
                 Report Asset
               </Link>
 
+              <Link
+                to="/my-assets"
+                className="rounded-lg border border-emerald-600 px-4 py-2 font-medium text-emerald-600 transition hover:bg-emerald-50"
+              >
+                My Assets
+              </Link>
+
               <div className="flex items-center gap-3 rounded-full border px-3 py-2">
                 <img
                   src={
@@ -97,8 +104,9 @@ const Navbar = () => {
 
                 <div>
                   <p className="text-sm font-semibold">{user?.fullName}</p>
-
-                  <p className="text-xs text-gray-500">{user?.role}</p>
+                  <p className="text-xs capitalize text-gray-500">
+                    {user?.role}
+                  </p>
                 </div>
               </div>
 
@@ -199,6 +207,13 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Report Asset
+                </Link>
+                <Link
+                  to="/my-assets"
+                  className="mt-2 rounded-md border border-emerald-600 px-2 py-3 text-center text-emerald-600"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  My Assets
                 </Link>
 
                 <button

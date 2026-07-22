@@ -7,6 +7,7 @@ import ReportAsset from "../pages/ReportAsset";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "./ProtectRoutes";
+import MyAssets from "../pages/MyAssets";
 
 const AppRoutes = () => {
   return (
@@ -15,11 +16,21 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/assets" element={<Assets />} />
         <Route path="/assets/:id" element={<AssetDetails />} />
+
         <Route
           path="/report-asset"
           element={
             <ProtectedRoute>
               <ReportAsset />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-assets"
+          element={
+            <ProtectedRoute>
+              <MyAssets />
             </ProtectedRoute>
           }
         />

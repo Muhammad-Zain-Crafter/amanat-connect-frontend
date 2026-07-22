@@ -19,3 +19,7 @@ export const reportAsset = (formData: FormData) => {
         formData
     );
 };
+
+export const getMyAssets = () => {
+  return axiosInstance.get("/assets/get-myAssets");
+};
