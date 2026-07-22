@@ -8,6 +8,9 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "./ProtectRoutes";
 import MyAssets from "../pages/MyAssets";
+import Profile from "../pages/Profile";
+import EditProfile from "../pages/EditProfile";
+import ChangePassword from "../pages/ChangePassword";
 
 const AppRoutes = () => {
   return (
@@ -31,6 +34,32 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <MyAssets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile/edit"
+          element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/change-password"
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
             </ProtectedRoute>
           }
         />

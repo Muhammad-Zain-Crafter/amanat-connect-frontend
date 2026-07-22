@@ -6,7 +6,6 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { loginUser } from "../../features/auth/authThunk";
 
-import Loader from "../common/Loader";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -132,7 +131,7 @@ const LoginForm = () => {
         disabled={loading}
         className="flex w-full items-center justify-center rounded-xl bg-emerald-600 py-3 font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {loading ? <Loader /> : "Login"}
+        Login
       </button>
 
       {/* Register */}

@@ -13,7 +13,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await authService.login(data);
 
-      return response.data.user;
+      return response.data.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Login failed"

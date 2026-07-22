@@ -3,6 +3,7 @@ import assetReducer from "../features/asset/assetSlice";
 import singleAssetReducer from "../features/singleAsset/singleAssetSlice"
 import reportAssetReducer from "../features/reportAsset/reportAssetSlice"
 import myAssets from "../features/myAssets/myAssetsSlice"
+import profileReducer from "../features/profile/profileSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -11,7 +12,8 @@ export const store = configureStore({
     asset: assetReducer,
     singleAsset: singleAssetReducer,
     reportAsset: reportAssetReducer,
-    myAssets: myAssets
+    myAssets: myAssets,
+    profile: profileReducer
   },
 });
 

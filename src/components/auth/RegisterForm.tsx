@@ -6,62 +6,80 @@ import {
   Lock,
   Eye,
   EyeOff,
-  Phone,
   GraduationCap,
   Building2,
   Upload,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { registerUser } from "../../features/auth/authThunk";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
-
-  const [image, setImage] = useState<File | null>(null);
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     studentId: "",
     department: "",
-    contactNumber: "",
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState("");
+  const { loading } = useAppSelector((state) => state.auth);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleImage = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (!file) return;
 
-    setImage(file);
+    setProfileImage(file);
 
     setPreview(URL.createObjectURL(file));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setError("");
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
+      setError("Passwords do not match.");
       return;
     }
 
-    console.log(formData);
-    console.log(image);
+    const data = new FormData();
+
+    data.append("fullName", formData.fullName);
+    data.append("email", formData.email);
+    data.append("studentId", formData.studentId);
+    data.append("department", formData.department);
+    data.append("password", formData.password);
+
+    if (profileImage) {
+      data.append("profileImage", profileImage);
+    }
+
+    try {
+      await dispatch(registerUser(data)).unwrap();
+
+      navigate("/login");
+    } catch (err: any) {
+      setError(err || "Registration failed.");
+    }
   };
 
   return (
@@ -72,9 +90,7 @@ const RegisterForm = () => {
       {/* Profile Image */}
 
       <div className="mb-8 flex flex-col items-center">
-
         <label htmlFor="image" className="cursor-pointer">
-
           {preview ? (
             <img
               src={preview}
@@ -86,7 +102,6 @@ const RegisterForm = () => {
               <Upload className="text-slate-500" />
             </div>
           )}
-
         </label>
 
         <input
@@ -97,14 +112,10 @@ const RegisterForm = () => {
           onChange={handleImage}
         />
 
-        <p className="mt-3 text-sm text-gray-500">
-          Upload Profile Image
-        </p>
-
+        <p className="mt-3 text-sm text-gray-500">Upload Profile Image</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-
         {/* Full Name */}
 
         <InputField
@@ -146,27 +157,12 @@ const RegisterForm = () => {
           onChange={handleChange}
         />
 
-        {/* Contact */}
-
-        <InputField
-          icon={<Phone size={20} />}
-          label="Contact Number"
-          name="contactNumber"
-          value={formData.contactNumber}
-          onChange={handleChange}
-        />
-
         {/* Password */}
 
         <div>
-          <label className="mb-2 block font-medium">
-            Password
-          </label>
-
+          <label className="mb-2 block font-medium">Password</label>
           <div className="flex items-center rounded-xl border px-4 focus-within:border-emerald-600">
-
             <Lock className="text-gray-400" size={20} />
-
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -174,75 +170,48 @@ const RegisterForm = () => {
               onChange={handleChange}
               className="w-full p-3 outline-none"
             />
-
             <button
               type="button"
-              onClick={() =>
-                setShowPassword(!showPassword)
-              }
+              onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? (
-                <EyeOff size={20} />
-              ) : (
-                <Eye size={20} />
-              )}
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
-
           </div>
         </div>
-
         {/* Confirm Password */}
-
-        <div className="md:col-span-2">
-
-          <label className="mb-2 block font-medium">
-            Confirm Password
-          </label>
+        <div>
+          <label className="mb-2 block font-medium">Confirm Password</label>
 
           <div className="flex items-center rounded-xl border px-4 focus-within:border-emerald-600">
-
             <Lock className="text-gray-400" size={20} />
-
             <input
-              type={
-                showConfirmPassword
-                  ? "text"
-                  : "password"
-              }
+              type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
               className="w-full p-3 outline-none"
             />
-
             <button
               type="button"
-              onClick={() =>
-                setShowConfirmPassword(
-                  !showConfirmPassword
-                )
-              }
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? (
-                <EyeOff size={20} />
-              ) : (
-                <Eye size={20} />
-              )}
+              {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
-
           </div>
-
         </div>
-
       </div>
-
       <button
         type="submit"
-        className="mt-8 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white transition hover:bg-emerald-700"
+        disabled={loading}
+        className="mt-8 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        Create Account
+        {loading ? "Creating Account..." : "Create Account"}
       </button>
-
+      {error && (
+        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-center text-sm font-medium text-red-600">
+          {error}
+        </div>
+      )}
       <p className="mt-6 text-center text-gray-600">
         Already have an account?{" "}
         <Link
@@ -260,9 +229,7 @@ interface InputProps {
   label: string;
   name: string;
   value: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon: React.ReactNode;
   type?: string;
 }
@@ -276,9 +243,7 @@ const InputField = ({
   type = "text",
 }: InputProps) => (
   <div>
-    <label className="mb-2 block font-medium">
-      {label}
-    </label>
+    <label className="mb-2 block font-medium">{label}</label>
 
     <div className="flex items-center rounded-xl border px-4 focus-within:border-emerald-600">
       <span className="text-gray-400">{icon}</span>
