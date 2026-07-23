@@ -10,9 +10,29 @@ export const updateProfile = (formData: FormData) => {
 export const changePassword = (data: {
   currentPassword: string;
   newPassword: string;
+  confirmPassword: string;
 }) => {
   return axiosInstance.post(
     "/users/change-password",
     data
+  );
+};
+
+export const forgotPassword = (data: {
+  email: string;
+}) => {
+  return axiosInstance.post(
+    "/users/forgot-password",
+    data
+  );
+};
+
+export const resetPassword = (
+  token: string,
+  password: string
+) => {
+  return axiosInstance.post(
+    `/users/reset-password/${token}`,
+    { password }
   );
 };

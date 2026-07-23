@@ -7,6 +7,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   isAuthenticated: false,
+  authChecked: false,
 };
 
 const authSlice = createSlice({
@@ -55,11 +56,13 @@ const authSlice = createSlice({
       .addCase(getProfile.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.authChecked = true;
       })
 
       .addCase(getProfile.rejected, (state) => {
         state.user = null;
         state.isAuthenticated = false;
+        state.authChecked = true;
       })
 
       // LOGOUT

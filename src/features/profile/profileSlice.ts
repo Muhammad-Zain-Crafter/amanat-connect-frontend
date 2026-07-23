@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { ProfileState } from "./profileTypes";
-import {
-  updateProfile,
-  changePassword,
-} from "./profileThunk";
+import { updateProfile, changePassword, forgotPassword, resetPassword } from "./profileThunk";
 
 const initialState: ProfileState = {
   loading: false,
@@ -57,11 +54,42 @@ const profileSlice = createSlice({
       .addCase(changePassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+
+      .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = null;
+      })
+
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = action.payload as string;
+      })
+
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = null;
+      })
+
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = action.payload;
+      })
+
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { clearProfileMessage } =
-  profileSlice.actions;
+export const { clearProfileMessage } = profileSlice.actions;
 
 export default profileSlice.reducer;

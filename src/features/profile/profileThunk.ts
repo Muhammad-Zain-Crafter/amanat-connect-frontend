@@ -28,6 +28,7 @@ export const changePassword = createAsyncThunk(
     data: {
       currentPassword: string;
       newPassword: string;
+      confirmPassword: string;
     },
     thunkAPI
   ) => {
@@ -40,6 +41,55 @@ export const changePassword = createAsyncThunk(
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
           "Failed to change password."
+      );
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  "profile/forgotPassword",
+  async (
+    data: { email: string },
+    thunkAPI
+  ) => {
+    try {
+      const response =
+        await profileService.forgotPassword(data);
+
+      return response.data.message;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to send reset link."
+      );
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "profile/resetPassword",
+  async (
+    {
+      token,
+      password,
+    }: {
+      token: string;
+      password: string;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response =
+        await profileService.resetPassword(
+          token,
+          password
+        );
+
+      return response.data.message;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message ||
+          "Failed to reset password."
       );
     }
   }

@@ -9,54 +9,26 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { changePassword } from "../../features/profile/profileThunk";
 
-const ChangePasswordForm = () => {
-  const dispatch = useAppDispatch();
-
-  const { loading, error, success } = useAppSelector(
-    (state) => state.profile
-  );
-
-  const [showCurrent, setShowCurrent] = useState(false);
-  const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  const [formData, setFormData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (
+interface PasswordFieldProps {
+  label: string;
+  name: string;
+  value: string;
+  visible: boolean;
+  toggle: () => void;
+  onChange: (
     e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  ) => void;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (formData.newPassword !== formData.confirmPassword) {
-      return;
-    }
-
-    dispatch(
-      changePassword({
-        currentPassword: formData.currentPassword,
-        newPassword: formData.newPassword,
-      })
-    );
-  };
-
-  const PasswordField = ({
-    label,
-    name,
-    value,
-    visible,
-    toggle,
-  }: any) => (
+const PasswordField = ({
+  label,
+  name,
+  value,
+  visible,
+  toggle,
+  onChange,
+}: PasswordFieldProps) => {
+  return (
     <div>
       <label className="mb-2 block font-medium">
         {label}
@@ -69,7 +41,7 @@ const ChangePasswordForm = () => {
           type={visible ? "text" : "password"}
           name={name}
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
           className="w-full p-3 outline-none"
         />
 
@@ -86,6 +58,60 @@ const ChangePasswordForm = () => {
       </div>
     </div>
   );
+};
+
+const ChangePasswordForm = () => {
+  const dispatch = useAppDispatch();
+
+  const { loading, error, success } =
+    useAppSelector(
+      (state) => state.profile
+    );
+
+  const [showCurrent, setShowCurrent] =
+    useState(false);
+  const [showNew, setShowNew] =
+    useState(false);
+  const [showConfirm, setShowConfirm] =
+    useState(false);
+
+  const [formData, setFormData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (
+    e: React.FormEvent
+  ) => {
+    e.preventDefault();
+
+    if (
+      formData.newPassword !==
+      formData.confirmPassword
+    ) {
+      return;
+    }
+
+    dispatch(
+      changePassword({
+        currentPassword:
+          formData.currentPassword,
+        newPassword: formData.newPassword,
+        confirmPassword:
+          formData.confirmPassword,
+      })
+    );
+  };
 
   return (
     <form
@@ -105,7 +131,8 @@ const ChangePasswordForm = () => {
         </h2>
 
         <p className="mt-2 text-gray-500">
-          Keep your account secure by updating your password.
+          Keep your account secure by updating
+          your password.
         </p>
       </div>
 
@@ -115,7 +142,10 @@ const ChangePasswordForm = () => {
           name="currentPassword"
           value={formData.currentPassword}
           visible={showCurrent}
-          toggle={() => setShowCurrent(!showCurrent)}
+          toggle={() =>
+            setShowCurrent((prev) => !prev)
+          }
+          onChange={handleChange}
         />
 
         <PasswordField
@@ -123,7 +153,10 @@ const ChangePasswordForm = () => {
           name="newPassword"
           value={formData.newPassword}
           visible={showNew}
-          toggle={() => setShowNew(!showNew)}
+          toggle={() =>
+            setShowNew((prev) => !prev)
+          }
+          onChange={handleChange}
         />
 
         <PasswordField
@@ -131,15 +164,20 @@ const ChangePasswordForm = () => {
           name="confirmPassword"
           value={formData.confirmPassword}
           visible={showConfirm}
-          toggle={() => setShowConfirm(!showConfirm)}
+          toggle={() =>
+            setShowConfirm((prev) => !prev)
+          }
+          onChange={handleChange}
         />
       </div>
 
-      <div className="mt-8 rounded-2xl bg-slate-50 p-5">
-        <h3 className="mb-3 font-semibold">
-          Password Requirements
-        </h3>
-      </div>
+      {formData.confirmPassword &&
+        formData.newPassword !==
+          formData.confirmPassword && (
+          <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            Passwords do not match.
+          </p>
+        )}
 
       {error && (
         <p className="mt-6 rounded-xl bg-red-50 p-3 text-red-600">
@@ -153,15 +191,13 @@ const ChangePasswordForm = () => {
         </p>
       )}
 
-      {formData.confirmPassword &&
-        formData.newPassword !== formData.confirmPassword && (
-          <p className="mt-4 text-sm text-red-600">
-            Passwords do not match.
-          </p>
-        )}
-
       <button
-        disabled={loading}
+        type="submit"
+        disabled={
+          loading ||
+          formData.newPassword !==
+            formData.confirmPassword
+        }
         className="mt-8 w-full rounded-xl bg-emerald-600 py-3 text-lg font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-gray-400"
       >
         {loading

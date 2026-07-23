@@ -216,134 +216,127 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
 
-      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="border-t bg-white md:hidden">
+          <div className="flex flex-col p-4">
+            <NavLink
+              to="/"
+              className="rounded-md px-3 py-3 hover:bg-gray-100"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </NavLink>
 
-{isMenuOpen && (
-  <div className="border-t bg-white md:hidden">
-    <div className="flex flex-col p-4">
-      <NavLink
-        to="/"
-        className="rounded-md px-3 py-3 hover:bg-gray-100"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Home
-      </NavLink>
+            <NavLink
+              to="/assets"
+              className="rounded-md px-3 py-3 hover:bg-gray-100"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Browse Assets
+            </NavLink>
 
-      <NavLink
-        to="/assets"
-        className="rounded-md px-3 py-3 hover:bg-gray-100"
-        onClick={() => setIsMenuOpen(false)}
-      >
-        Browse Assets
-      </NavLink>
+            <hr className="my-3" />
 
-      <hr className="my-3" />
+            {!isAuthenticated ? (
+              <>
+                <Link
+                  to="/login"
+                  className="rounded-md px-3 py-3 hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
 
-      {!isAuthenticated ? (
-        <>
-          <Link
-            to="/login"
-            className="rounded-md px-3 py-3 hover:bg-gray-100"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Login
-          </Link>
+                <Link
+                  to="/register"
+                  className="mt-2 rounded-lg bg-emerald-600 px-3 py-3 text-center text-white hover:bg-emerald-700"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Register
+                </Link>
+              </>
+            ) : (
+              <>
+                {/* User */}
 
-          <Link
-            to="/register"
-            className="mt-2 rounded-lg bg-emerald-600 px-3 py-3 text-center text-white hover:bg-emerald-700"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Register
-          </Link>
-        </>
-      ) : (
-        <>
-          {/* User */}
+                <div className="mb-4 flex items-center gap-3 rounded-xl border p-3">
+                  <img
+                    src={
+                      user?.profileImage?.url ||
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        user?.fullName || "User",
+                      )}`
+                    }
+                    alt={user?.fullName}
+                    className="h-14 w-14 rounded-full object-cover"
+                  />
 
-          <div className="mb-4 flex items-center gap-3 rounded-xl border p-3">
-            <img
-              src={
-                user?.profileImage?.url ||
-                `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  user?.fullName || "User"
-                )}`
-              }
-              alt={user?.fullName}
-              className="h-14 w-14 rounded-full object-cover"
-            />
+                  <div>
+                    <h3 className="font-semibold">{user?.fullName}</h3>
 
-            <div>
-              <h3 className="font-semibold">
-                {user?.fullName}
-              </h3>
+                    <p className="text-sm text-gray-500">{user?.email}</p>
+                  </div>
+                </div>
 
-              <p className="text-sm text-gray-500">
-                {user?.email}
-              </p>
-            </div>
+                <Link
+                  to="/profile"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                >
+                  <User size={18} />
+                  My Profile
+                </Link>
+
+                <Link
+                  to="/edit-profile"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                >
+                  <Pencil size={18} />
+                  Edit Profile
+                </Link>
+
+                <Link
+                  to="/my-assets"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                >
+                  <FolderOpen size={18} />
+                  My Assets
+                </Link>
+
+                <Link
+                  to="/change-password"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                >
+                  <KeyRound size={18} />
+                  Change Password
+                </Link>
+
+                <Link
+                  to="/report-asset"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-3 text-white hover:bg-emerald-700"
+                >
+                  <PlusCircle size={18} />
+                  Report Asset
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-red-200 px-3 py-3 text-red-600 hover:bg-red-50"
+                >
+                  <LogOut size={18} />
+                  Logout
+                </button>
+              </>
+            )}
           </div>
-
-          <Link
-            to="/profile"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
-          >
-            <User size={18} />
-            My Profile
-          </Link>
-
-          <Link
-            to="/edit-profile"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
-          >
-            <Pencil size={18} />
-            Edit Profile
-          </Link>
-
-          <Link
-            to="/my-assets"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
-          >
-            <FolderOpen size={18} />
-            My Assets
-          </Link>
-
-          <Link
-            to="/change-password"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
-          >
-            <KeyRound size={18} />
-            Change Password
-          </Link>
-
-          <Link
-            to="/report-asset"
-            onClick={() => setIsMenuOpen(false)}
-            className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-3 text-white hover:bg-emerald-700"
-          >
-            <PlusCircle size={18} />
-            Report Asset
-          </Link>
-
-          <button
-            onClick={handleLogout}
-            className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-red-200 px-3 py-3 text-red-600 hover:bg-red-50"
-          >
-            <LogOut size={18} />
-            Logout
-          </button>
-        </>
+        </div>
       )}
-    </div>
-  </div>
-)}
-</header>
+    </header>
   );
 };
 
 export default Navbar;
-
