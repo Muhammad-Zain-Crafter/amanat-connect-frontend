@@ -13,6 +13,7 @@ import EditProfile from "../pages/EditProfile";
 import ChangePassword from "../pages/ChangePassword";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
+import MyClaims from "../pages/MyClaims";
 
 const AppRoutes = () => {
   return (
@@ -67,6 +68,14 @@ const AppRoutes = () => {
         />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route
+          path="/my-claims"
+          element={
+            <ProtectedRoute>
+              <MyClaims />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       <Route path="/login" element={<Login />} />

@@ -7,8 +7,10 @@ import { useAppSelector } from "../hooks/useAppSelector";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Loader from "../components/common/Loader";
+import ClaimForm from "../components/claim/ClaimForm";
 
 const AssetDetails = () => {
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
@@ -152,6 +154,8 @@ const AssetDetails = () => {
 
             {/* Action */}
 
+            {/* Action */}
+
             <div className="rounded-2xl border border-slate-200 p-6">
               <h2 className="mb-2 text-xl font-semibold">Claim Status</h2>
 
@@ -162,9 +166,23 @@ const AssetDetails = () => {
                     should submit a claim.
                   </p>
 
-                  <button className="w-full rounded-xl bg-emerald-600 py-4 font-semibold text-white hover:bg-emerald-700">
-                    Claim This Asset
-                  </button>
+                  {!isAuthenticated ? (
+                    <Link
+                      to="/login"
+                      className="block w-full rounded-xl bg-emerald-600 py-4 text-center font-semibold text-white hover:bg-emerald-700"
+                    >
+                      Login to Claim
+                    </Link>
+                  ) : asset.reportedBy?._id === user?._id ? (
+                    <button
+                      disabled
+                      className="w-full cursor-not-allowed rounded-xl bg-gray-200 py-4 font-semibold text-gray-600"
+                    >
+                      You Reported This Asset
+                    </button>
+                  ) : (
+                    <ClaimForm assetId={asset._id} />
+                  )}
                 </>
               )}
 

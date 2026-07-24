@@ -11,6 +11,7 @@ import {
   Pencil,
   FolderOpen,
   KeyRound,
+  FileText
 } from "lucide-react";
 
 import { useAppDispatch } from "../hooks/useAppDispatch";
@@ -171,7 +172,13 @@ const Navbar = () => {
                       <FolderOpen size={18} />
                       My Assets
                     </Link>
-
+                    <Link
+                      to="/my-claims"
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100"
+                    >
+                      <FileText size={18} />
+                      My Claims
+                    </Link>
                     <Link
                       to="/change-password"
                       className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
