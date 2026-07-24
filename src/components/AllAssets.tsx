@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useAppSelector } from "../hooks/useAppSelector";
-import AssetCard from "./AssetCard";
+import AssetCard from "./asset/AssetCard";
 import Loader from "./common/Loader";
 
 

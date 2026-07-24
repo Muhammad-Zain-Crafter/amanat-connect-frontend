@@ -1,4 +1,4 @@
-import AssetCard from "../AssetCard";
+import AssetCard from "./AssetCard";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Loader from "../common/Loader";
 

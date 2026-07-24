@@ -30,6 +30,7 @@ const ClaimCard = ({ claim }: ClaimCardProps) => {
           "https://placehold.co/600x400?text=No+Image"
         }
         alt={claim.asset?.title}
+        loading="lazy"
         className="h-56 w-full object-cover"
       />
 

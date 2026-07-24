@@ -5,7 +5,7 @@ import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useAppSelector } from "../hooks/useAppSelector";
 
 import { fetchMyAssets } from "../features/myAssets/myAssetsThunk";
-import AssetCard from "../components/AssetCard";
+import AssetCard from "../components/asset/AssetCard";
 
 const MyAssets = () => {
   const dispatch = useAppDispatch();

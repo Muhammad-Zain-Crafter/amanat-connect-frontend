@@ -1,4 +1,4 @@
-import type { Asset } from "../features/asset/assetTypes";
+import type { Asset } from "../../features/asset/assetTypes";
 import {
   Calendar,
   MapPin,
@@ -27,6 +27,7 @@ const AssetCard = ({ asset }: AssetCardProps) => {
             "https://placehold.co/600x400?text=No+Image"
           }
           alt={asset.title}
+          loading="lazy"
           className="h-56 w-full object-cover transition duration-500 group-hover:scale-110"
         />
 
