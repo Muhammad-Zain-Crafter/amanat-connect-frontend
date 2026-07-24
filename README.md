@@ -1,75 +1,102 @@
-# React + TypeScript + Vite
+# 🎒 Amanat Connect Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React frontend for **Amanat Connect**, a campus lost & found platform that helps students report lost items, browse found items, and submit claims through a secure and user-friendly interface.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🔐 JWT Authentication
+- 👤 User Registration & Login
+- 🔑 Forgot & Reset Password
+- 📝 Report Lost & Found Items
+- 🔍 Browse & Search Assets
+- 📄 Asset Details Page
+- 📦 Submit Claim Requests
+- 👤 User Profile Management
+- 🛡️ Protected Routes
+- 📱 Fully Responsive UI
+- ⚡ Centralized State Management with Redux Toolkit
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React.js
+- TypeScript
+- Redux Toolkit
+- React Router
+- Tailwind CSS
+- Axios
+- React Hook Form
+- Lucide React
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📂 Project Structure
 
 ```
+src/
+├── components/
+├── pages/
+├── features/
+├── services/
+├── hooks/
+├── layouts/
+├── routes/
+├── utils/
+├── types/
+└── assets/
+```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Clone the repository
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/Muhammad-Zain-Crafter/amanat-connect-frontend.git
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+The application will run at:
 
 ```
+http://localhost:5173
+```
+
+## 🔗 Backend Repository
+
+https://github.com/Muhammad-Zain-Crafter/amanat-connect-backend
+
+## 📸 Screenshots
+
+Coming Soon...
+
+## 🚧 Project Status
+
+This project is currently under active development.
+
+### Upcoming Features
+
+- Admin Dashboard
+- Claim Management
+- Asset Approval Workflow
+- Notifications
+- Pagination & Advanced Filtering
+- Deployment
+
+## 👨‍💻 Author
+
+**Muhammad Zain**
+
+- GitHub: https://github.com/Muhammad-Zain-Crafter
+- LinkedIn: https://www.linkedin.com/in/muhammad-zain-19ba6a319/
+
+---
+
+⭐ If you found this project helpful, consider giving it a star!
