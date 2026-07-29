@@ -51,10 +51,9 @@ const Navbar = () => {
   };
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `transition-colors ${
-      isActive
-        ? "font-semibold text-emerald-600"
-        : "text-gray-700 hover:text-emerald-600"
+    `transition-colors ${isActive
+      ? "font-semibold text-emerald-600"
+      : "text-gray-700 hover:text-emerald-600"
     }`;
 
   return (
@@ -63,7 +62,7 @@ const Navbar = () => {
         {/* Logo */}
 
         <Link
-          to="/"
+          to={user?.role === "admin" ? "/admin/dashboard" : "/"}
           className="flex items-center gap-2 text-xl font-bold text-emerald-600 md:text-2xl"
         >
           <PackageSearch size={30} />
@@ -73,13 +72,45 @@ const Navbar = () => {
         {/* Desktop Menu */}
 
         <div className="hidden items-center gap-8 md:flex">
-          <NavLink to="/" className={navLinkClass}>
-            Home
-          </NavLink>
+          {!isAuthenticated && (
+            <>
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
 
-          <NavLink to="/assets" className={navLinkClass}>
-            Browse Assets
-          </NavLink>
+              <NavLink to="/assets" className={navLinkClass}>
+                Browse Assets
+              </NavLink>
+            </>
+          )}
+
+          {isAuthenticated && user?.role === "student" && (
+            <>
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
+
+              <NavLink to="/assets" className={navLinkClass}>
+                Browse Assets
+              </NavLink>
+            </>
+          )}
+
+          {isAuthenticated && user?.role === "admin" && (
+            <>
+              <NavLink to="/admin/dashboard" className={navLinkClass}>
+                Dashboard
+              </NavLink>
+
+              <NavLink to="/admin/pending-assets" className={navLinkClass}>
+                Pending Assets
+              </NavLink>
+
+              <NavLink to="/admin/pending-claims" className={navLinkClass}>
+                Pending Claims
+              </NavLink>
+            </>
+          )}
         </div>
 
         {/* Right Side */}
@@ -103,13 +134,15 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link
-                to="/report-asset"
-                className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 font-medium text-white transition hover:bg-emerald-700"
-              >
-                <PlusCircle size={18} />
-                Report Asset
-              </Link>
+              {user?.role !== "admin" && (
+                <Link
+                  to="/report-asset"
+                  className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 font-medium text-white transition hover:bg-emerald-700"
+                >
+                  <PlusCircle size={18} />
+                  Report Asset
+                </Link>
+              )}
 
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -154,31 +187,34 @@ const Navbar = () => {
                       <User size={18} />
                       My Profile
                     </Link>
+                    {user?.role !== "admin" && (
+                      <>
+                        <Link
+                          to="/profile/edit"
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                          onClick={() => setIsProfileOpen(false)}
+                        >
+                          <Pencil size={18} />
+                          Edit Profile
+                        </Link>
 
-                    <Link
-                      to="/profile/edit"
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      <Pencil size={18} />
-                      Edit Profile
-                    </Link>
-
-                    <Link
-                      to="/my-assets"
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      <FolderOpen size={18} />
-                      My Assets
-                    </Link>
-                    <Link
-                      to="/my-claims"
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100"
-                    >
-                      <FileText size={18} />
-                      My Claims
-                    </Link>
+                        <Link
+                          to="/my-assets"
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
+                          onClick={() => setIsProfileOpen(false)}
+                        >
+                          <FolderOpen size={18} />
+                          My Assets
+                        </Link>
+                        <Link
+                          to="/my-claims"
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100"
+                        >
+                          <FileText size={18} />
+                          My Claims
+                        </Link>
+                      </>
+                    )}
                     <Link
                       to="/change-password"
                       className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
@@ -187,16 +223,6 @@ const Navbar = () => {
                       <KeyRound size={18} />
                       Change Password
                     </Link>
-
-                    <Link
-                      to="/report-asset"
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      <PlusCircle size={18} />
-                      Report Asset
-                    </Link>
-
                     <button
                       onClick={handleLogout}
                       className="flex w-full items-center gap-3 border-t px-4 py-3 text-red-600 hover:bg-red-50"
@@ -226,21 +252,53 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="border-t bg-white md:hidden">
           <div className="flex flex-col p-4">
-            <NavLink
-              to="/"
-              className="rounded-md px-3 py-3 hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </NavLink>
+            {(!isAuthenticated || user?.role === "student") && (
+              <>
+                <NavLink
+                  to="/"
+                  className="rounded-md px-3 py-3 hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Home
+                </NavLink>
 
-            <NavLink
-              to="/assets"
-              className="rounded-md px-3 py-3 hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Browse Assets
-            </NavLink>
+                <NavLink
+                  to="/assets"
+                  className="rounded-md px-3 py-3 hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Browse Assets
+                </NavLink>
+              </>
+            )}
+
+            {user?.role === "admin" && (
+              <>
+                <NavLink
+                  to="/admin/dashboard"
+                  className="rounded-md px-3 py-3 hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </NavLink>
+
+                <NavLink
+                  to="/admin/pending-assets"
+                  className="rounded-md px-3 py-3 hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Pending Assets
+                </NavLink>
+
+                <NavLink
+                  to="/admin/pending-claims"
+                  className="rounded-md px-3 py-3 hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Pending Claims
+                </NavLink>
+              </>
+            )}
 
             <hr className="my-3" />
 
@@ -293,25 +351,34 @@ const Navbar = () => {
                   <User size={18} />
                   My Profile
                 </Link>
+                {user?.role === "student" && (
+                  <>
+                    <Link
+                      to="/edit-profile"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                    >
+                      <Pencil size={18} />
+                      Edit Profile
+                    </Link>
 
-                <Link
-                  to="/edit-profile"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
-                >
-                  <Pencil size={18} />
-                  Edit Profile
-                </Link>
-
-                <Link
-                  to="/my-assets"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
-                >
-                  <FolderOpen size={18} />
-                  My Assets
-                </Link>
-
+                    <Link
+                      to="/my-assets"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                    >
+                      <FolderOpen size={18} />
+                      My Assets
+                    </Link>
+                    <Link
+                      to="/my-claims"
+                      className="flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-100"
+                    >
+                      <FileText size={18} />
+                      My Claims
+                    </Link>
+                  </>
+                )}
                 <Link
                   to="/change-password"
                   onClick={() => setIsMenuOpen(false)}
@@ -321,15 +388,16 @@ const Navbar = () => {
                   Change Password
                 </Link>
 
-                <Link
-                  to="/report-asset"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-3 text-white hover:bg-emerald-700"
-                >
-                  <PlusCircle size={18} />
-                  Report Asset
-                </Link>
-
+                {user?.role === "student" && (
+                  <Link
+                    to="/report-asset"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-3 text-white hover:bg-emerald-700"
+                  >
+                    <PlusCircle size={18} />
+                    Report Asset
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-red-200 px-3 py-3 text-red-600 hover:bg-red-50"

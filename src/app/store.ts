@@ -5,6 +5,7 @@ import reportAssetReducer from "../features/reportAsset/reportAssetSlice"
 import myAssets from "../features/myAssets/myAssetsSlice"
 import profileReducer from "../features/profile/profileSlice";
 import claimReducer from "../features/claim/claimSlice"
+import adminReducer from "../features/admin/adminSlice"
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
     myAssets: myAssets,
     profile: profileReducer,
     claim: claimReducer,
+    admin: adminReducer
   },
 });
 

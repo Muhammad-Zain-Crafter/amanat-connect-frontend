@@ -19,6 +19,8 @@ export interface Asset {
     fullName: string;
     studentId: string;
   };
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AssetState {

@@ -14,6 +14,9 @@ import ChangePassword from "../pages/ChangePassword";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import MyClaims from "../pages/MyClaims";
+import AdminRoute from "./AdminRoute";
+import AdminDashboard from "../pages/AdminDashboard";
+import PendingAssets from "../pages/PendingAssets";
 
 const AppRoutes = () => {
   return (
@@ -74,6 +77,22 @@ const AppRoutes = () => {
             <ProtectedRoute>
               <MyClaims />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+         <Route
+          path="/admin/pending-assets"
+          element={
+            <AdminRoute>
+              <PendingAssets />
+            </AdminRoute>
           }
         />
       </Route>
