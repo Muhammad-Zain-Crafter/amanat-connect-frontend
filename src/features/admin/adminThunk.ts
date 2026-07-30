@@ -73,18 +73,20 @@ export const approveClaim = createAsyncThunk(
   "admin/approveClaim",
   async (id: string, thunkAPI) => {
     try {
-      const response =
-        await adminService.approveClaim(id);
+      const response = await adminService.approveClaim(id);
 
-      return response.data.message;
+      return {
+        id,
+        message: response.data.message,
+      };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to approve claim"
+        "Failed to approve claim"
       );
     }
   }
-);
+);;
 
 export const rejectClaim = createAsyncThunk(
   "admin/rejectClaim",

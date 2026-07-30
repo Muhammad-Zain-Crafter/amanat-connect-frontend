@@ -43,11 +43,13 @@ const AssetDetails = () => {
     <section className="bg-slate-50 py-14">
       <div className="mx-auto max-w-7xl px-6">
         <Link
-          to="/assets"
+          to={user?.role === "admin" ? "/admin/dashboard" : "/assets"}
           className="mb-8 inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700"
         >
           <ArrowLeft size={20} />
-          Back to Browse Assets
+          {user?.role === "admin"
+            ? "Back to Dashboard"
+            : "Back to Browse Assets"}
         </Link>
 
         <div className="grid gap-10 rounded-3xl bg-white p-8 shadow-lg lg:grid-cols-2">
@@ -81,13 +83,12 @@ const AssetDetails = () => {
               </div>
 
               <span
-                className={`rounded-full px-4 py-2 text-sm font-semibold ${
-                  asset.status === "lost"
+                className={`rounded-full px-4 py-2 text-sm font-semibold ${asset.status === "lost"
                     ? "bg-red-100 text-red-600"
                     : asset.status === "found"
                       ? "bg-green-100 text-green-600"
                       : "bg-blue-100 text-blue-600"
-                }`}
+                  }`}
               >
                 {asset.status.toUpperCase()}
               </span>

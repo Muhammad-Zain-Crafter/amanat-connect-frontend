@@ -114,10 +114,10 @@ const adminSlice = createSlice({
 
       .addCase(approveClaim.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = action.payload;
+        state.success = action.payload.message;
 
         state.pendingClaims = state.pendingClaims.filter(
-          (claim) => claim._id !== action.meta.arg
+          (claim) => claim._id !== action.payload.id
         );
       })
 
@@ -136,10 +136,10 @@ const adminSlice = createSlice({
 
       .addCase(rejectClaim.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = action.payload;
+        state.success = action.payload.message;
 
         state.pendingClaims = state.pendingClaims.filter(
-          (claim) => claim._id !== action.meta.arg.id
+          (claim) => claim._id !== action.payload.id
         );
       })
 

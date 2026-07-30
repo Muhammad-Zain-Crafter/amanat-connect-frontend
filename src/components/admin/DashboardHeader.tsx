@@ -18,7 +18,7 @@ const DashboardHeader = () => {
           </p>
 
           <h1 className="mt-2 text-4xl font-bold">
-            Welcome Back 👋
+            Welcome Back
           </h1>
 
           <p className="mt-3 text-gray-500">

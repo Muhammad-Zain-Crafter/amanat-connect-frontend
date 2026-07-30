@@ -6,10 +6,11 @@ import Loader from "../components/common/Loader";
 import DashboardHeader from "../components/admin/DashboardHeader";
 import StatsGrid from "../components/admin/StatsGrid";
 import RecentAssets from "../components/admin/RecentAssets";
+import RecentClaims from "../components/admin/RecentClaims";
 
 const AdminDashboard = () => {
   const dispatch = useAppDispatch();
-
+  
   const { dashboardStats, loading, error } = useAppSelector(
     (state) => state.admin
   );
@@ -35,7 +36,7 @@ const AdminDashboard = () => {
   }
 
   if (!dashboardStats) return null;
-
+  console.log(dashboardStats.recentClaims);
   return (
     <section className="min-h-screen bg-slate-50 py-8">
       <div className="mx-auto max-w-7xl px-6">
@@ -50,6 +51,10 @@ const AdminDashboard = () => {
 
           <RecentAssets
             assets={dashboardStats.recentAssets}
+          />
+
+          <RecentClaims
+            claims={dashboardStats.recentClaims}
           />
 
          

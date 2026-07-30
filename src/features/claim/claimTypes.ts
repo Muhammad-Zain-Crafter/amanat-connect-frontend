@@ -10,6 +10,7 @@ export interface Claim {
 
 export interface ClaimState {
   claims: Claim[];
+  pendingClaims: Claim[];
   loading: boolean;
   success: string | null;
   error: string | null;

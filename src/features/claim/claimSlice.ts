@@ -8,6 +8,7 @@ import {
 
 const initialState: ClaimState = {
   claims: [],
+  pendingClaims: [],
   loading: false,
   success: null,
   error: null,
@@ -80,7 +81,8 @@ const claimSlice = createSlice({
       .addCase(deleteClaim.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+      
   },
 });
 

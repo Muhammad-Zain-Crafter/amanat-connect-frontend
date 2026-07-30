@@ -1,7 +1,5 @@
-import { Eye, CheckCircle } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { approveAsset } from "../../features/admin/adminThunk";
 import type { Asset } from "../../features/asset/assetTypes";
 
 interface PendingAssetsTableProps {
@@ -11,17 +9,6 @@ interface PendingAssetsTableProps {
 const PendingAssetsTable = ({
   assets,
 }: PendingAssetsTableProps) => {
-  const dispatch = useAppDispatch();
-
-  const handleApprove = (id: string) => {
-    const confirmApprove = window.confirm(
-      "Approve this asset?"
-    );
-
-    if (!confirmApprove) return;
-
-    dispatch(approveAsset(id));
-  };
 
   if (assets.length === 0) {
     return (
@@ -91,13 +78,12 @@ const PendingAssetsTable = ({
                 {/* Status */}
                 <td className="px-6 py-4">
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                      asset.status === "lost"
-                        ? "bg-red-100 text-red-700"
-                        : asset.status === "found"
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${asset.status === "lost"
+                      ? "bg-red-100 text-red-700"
+                      : asset.status === "found"
                         ? "bg-emerald-100 text-emerald-700"
                         : "bg-indigo-100 text-indigo-700"
-                    }`}
+                      }`}
                   >
                     {asset.status}
                   </span>
@@ -127,20 +113,11 @@ const PendingAssetsTable = ({
                 <td className="px-6 py-4">
                   <div className="flex justify-center gap-3">
                     <Link
-                      to={`/assets/${asset._id}`}
+                      to={`/admin/pending-assets/${asset._id}`}
                       className="rounded-lg bg-slate-100 p-2 transition hover:bg-slate-200"
                     >
                       <Eye size={18} />
                     </Link>
-
-                    <button
-                      onClick={() =>
-                        handleApprove(asset._id)
-                      }
-                      className="rounded-lg bg-emerald-600 p-2 text-white transition hover:bg-emerald-700"
-                    >
-                      <CheckCircle size={18} />
-                    </button>
                   </div>
                 </td>
               </tr>

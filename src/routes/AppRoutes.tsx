@@ -17,6 +17,8 @@ import MyClaims from "../pages/MyClaims";
 import AdminRoute from "./AdminRoute";
 import AdminDashboard from "../pages/AdminDashboard";
 import PendingAssets from "../pages/PendingAssets";
+import ApproveAsset from "../pages/ApproveAsset";
+import PendingClaims from "../pages/PendingClaims";
 
 const AppRoutes = () => {
   return (
@@ -87,11 +89,27 @@ const AppRoutes = () => {
             </AdminRoute>
           }
         />
-         <Route
+        <Route
           path="/admin/pending-assets"
           element={
             <AdminRoute>
               <PendingAssets />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/pending-assets/:id"
+          element={
+            <AdminRoute>
+              <ApproveAsset />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/pending-claims"
+          element={
+            <AdminRoute>
+              <PendingClaims />
             </AdminRoute>
           }
         />

@@ -1,49 +1,76 @@
-// const RecentClaims = ({ claims }: any) => {
-//   return (
-//     <div className="rounded-3xl bg-white p-6 shadow-sm">
+import { User, CalendarDays, Package } from "lucide-react";
 
-//       <h2 className="mb-6 text-xl font-bold">
-//         Recent Claims
-//       </h2>
+interface RecentClaimsProps {
+  claims: any[];
+}
 
-//       <div className="space-y-4">
+const RecentClaims = ({ claims }: RecentClaimsProps) => {
+  if (!claims.length) {
+    return (
+      <div className="rounded-3xl bg-white p-6 shadow-sm">
+        <h2 className="mb-6 text-xl font-bold">Recent Claims</h2>
 
-//         {claims.map((claim: any) => (
-//           <div
-//             key={claim._id}
-//             className="flex items-center justify-between rounded-2xl border p-4 hover:bg-slate-50"
-//           >
-//             <div>
+        <div className="rounded-2xl border border-dashed border-slate-300 py-12 text-center">
+          <p className="text-slate-500">No claims submitted yet.</p>
+        </div>
+      </div>
+    );
+  }
 
-//               <h3 className="font-semibold">
-//                 {claim.asset.title}
-//               </h3>
+  return (
+    <div className="rounded-3xl bg-white p-6 shadow-sm">
+      <h2 className="mb-6 text-xl font-bold">Recent Claims</h2>
 
-//               <p className="text-sm text-gray-500">
-//                 {claim.claimedBy.fullName}
-//               </p>
+      <div className="space-y-4">
+        {claims.map((claim) => (
+          <div
+            key={claim._id}
+            className="flex items-center justify-between rounded-2xl border p-4 transition hover:bg-slate-50"
+          >
+            <div className="space-y-2">
+              {/* Asset */}
+              <div className="flex items-center gap-2">
+                <Package size={16} className="text-emerald-600" />
+                <p className="font-semibold text-slate-800">
+                  {claim.asset?.title || "Deleted Asset"}
+                </p>
+              </div>
 
-//             </div>
+              {/* Student */}
+              <div className="flex items-center gap-2 text-sm text-slate-600">
+                <User size={15} />
+                <span>
+                  {claim.claimedBy?.fullName}
+                  {claim.claimedBy?.studentId &&
+                    ` (${claim.claimedBy.studentId})`}
+                </span>
+              </div>
 
-//             <span
-//               className={`rounded-full px-3 py-1 text-sm capitalize ${
-//                 claim.status === "approved"
-//                   ? "bg-green-100 text-green-600"
-//                   : claim.status === "pending"
-//                   ? "bg-yellow-100 text-yellow-700"
-//                   : "bg-red-100 text-red-600"
-//               }`}
-//             >
-//               {claim.status}
-//             </span>
+              {/* Date */}
+              <div className="flex items-center gap-2 text-sm text-slate-500">
+                <CalendarDays size={15} />
+                <span>
+                  {new Date(claim.createdAt).toLocaleDateString()}
+                </span>
+              </div>
+            </div>
 
-//           </div>
-//         ))}
+            <span
+              className={`rounded-full px-3 py-1 text-sm font-semibold capitalize ${
+                claim.status === "approved"
+                  ? "bg-green-100 text-green-700"
+                  : claim.status === "pending"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {claim.status}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-//       </div>
-
-//     </div>
-//   );
-// };
-
-// export default RecentClaims;
+export default RecentClaims;
