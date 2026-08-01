@@ -19,6 +19,7 @@ import AdminDashboard from "../pages/AdminDashboard";
 import PendingAssets from "../pages/PendingAssets";
 import ApproveAsset from "../pages/ApproveAsset";
 import PendingClaims from "../pages/PendingClaims";
+import AdminClaimDetail from "../pages/AdminClaimDetail";
 
 const AppRoutes = () => {
   return (
@@ -112,6 +113,10 @@ const AppRoutes = () => {
               <PendingClaims />
             </AdminRoute>
           }
+        />
+        <Route
+          path="/admin/claims/:claimId"
+          element={<AdminClaimDetail />}
         />
       </Route>
 

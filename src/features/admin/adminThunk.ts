@@ -12,7 +12,7 @@ export const fetchDashboardStats = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch dashboard stats"
+        "Failed to fetch dashboard stats"
       );
     }
   }
@@ -29,7 +29,7 @@ export const fetchPendingAssets = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch pending assets"
+        "Failed to fetch pending assets"
       );
     }
   }
@@ -46,28 +46,31 @@ export const approveAsset = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to approve asset"
+        "Failed to approve asset"
       );
     }
   }
 );
+
+// ================= Pending Claims =================
 
 export const fetchPendingClaims = createAsyncThunk(
   "admin/fetchPendingClaims",
   async (_, thunkAPI) => {
     try {
-      const response =
-        await adminService.getPendingClaims();
+      const response = await adminService.getPendingClaims();
 
       return response.data.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch claims"
+        "Failed to fetch claims"
       );
     }
   }
 );
+
+// ================= Approve Claim =================
 
 export const approveClaim = createAsyncThunk(
   "admin/approveClaim",
@@ -86,7 +89,9 @@ export const approveClaim = createAsyncThunk(
       );
     }
   }
-);;
+);
+
+// ================= Reject Claim =================
 
 export const rejectClaim = createAsyncThunk(
   "admin/rejectClaim",
@@ -101,17 +106,19 @@ export const rejectClaim = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const response =
-        await adminService.rejectClaim(
-          id,
-          adminNote
-        );
+      const response = await adminService.rejectClaim(
+        id,
+        adminNote
+      );
 
-      return response.data.message;
+      return {
+        id,
+        message: response.data.message,
+      };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message ||
-          "Failed to reject claim"
+        "Failed to reject claim"
       );
     }
   }

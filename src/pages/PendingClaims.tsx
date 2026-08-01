@@ -5,13 +5,14 @@ import { fetchPendingClaims } from "../features/admin/adminThunk";
 import Loader from "../components/common/Loader";
 import PendingClaimsTable from "../components/admin/PendingClaimsTable";
 
-
 const PendingClaims = () => {
   const dispatch = useAppDispatch();
 
-  const { pendingClaims, loading, error } = useAppSelector(
-    (state) => state.claim
-  );
+  const {
+    pendingClaims,
+    loading,
+    error,
+  } = useAppSelector((state) => state.admin);
 
   useEffect(() => {
     dispatch(fetchPendingClaims());
@@ -36,6 +37,7 @@ const PendingClaims = () => {
   return (
     <section className="min-h-screen bg-slate-50 py-10">
       <div className="mx-auto max-w-7xl px-6">
+
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -60,6 +62,7 @@ const PendingClaims = () => {
         </div>
 
         <PendingClaimsTable claims={pendingClaims} />
+
       </div>
     </section>
   );
