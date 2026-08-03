@@ -45,7 +45,13 @@ export const getProfile = createAsyncThunk(
 
       return response.data.user;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(null);
+      if (error.response?.status === 401) {
+        return thunkAPI.rejectWithValue(null);
+      }
+
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to fetch profile"
+      );
     }
   }
 );
