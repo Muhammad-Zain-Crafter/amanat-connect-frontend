@@ -3,21 +3,13 @@ import * as authService from "../../services/authService";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (
-    data: {
-      email: string;
-      password: string;
-    },
-    thunkAPI
-  ) => {
+  async (data: { email: string; password: string }, thunkAPI) => {
     try {
       const response = await authService.login(data);
-
+      localStorage.setItem("token", response.data.token); // add this line
       return response.data.user;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Login failed"
-      );
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Login failed");
     }
   }
 );
@@ -61,11 +53,11 @@ export const logoutUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       await authService.logout();
+      localStorage.removeItem("token"); 
       return true;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Logout failed"
-      );
+      localStorage.removeItem("token");
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Logout failed");
     }
   }
 );
