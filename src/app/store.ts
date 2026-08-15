@@ -11,11 +11,11 @@ import { configureStore } from "@reduxjs/toolkit";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    profile: profileReducer,
     asset: assetReducer,
     singleAsset: singleAssetReducer,
     reportAsset: reportAssetReducer,
     myAssets: myAssets,
-    profile: profileReducer,
     claim: claimReducer,
     admin: adminReducer
   },
