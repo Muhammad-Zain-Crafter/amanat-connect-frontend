@@ -11,7 +11,6 @@ export interface User {
   };
   role: "student" | "admin";
 }
-
 export interface AuthState {
   user: User | null;
   loading: boolean;

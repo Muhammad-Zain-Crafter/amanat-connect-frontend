@@ -16,6 +16,7 @@ const Home = () => {
     dispatch(fetchAssets({ page: 1, search: "" }));
   }, [dispatch]);
 
+  
   return (
     <>
       <Hero />
