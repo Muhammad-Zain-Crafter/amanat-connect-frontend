@@ -18,7 +18,7 @@ const MyClaims = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center py-24">
+      <div className="flex justify-center py-20">
         <Loader />
       </div>
     );
